@@ -54,13 +54,14 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("Invalid input - use Syntax : update <id> <name>")
 
-    def do_destroy(self,line):
+    def do_destroy(self,id):
         """Deletes the user using the id - Syntax : destroy <id>"""
-        if line in self.users:
-            del self.users[line]
-            print(f"User {line} deleted")
+        # must check if id is an integer, else return an error
+        if id in self.users:
+            del self.users[id]
+            print(f"User ID:{id} deleted")
         else:
-            print(f"User with ID: {line} not found")
+            print(f"User with ID: {id} not found")
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
