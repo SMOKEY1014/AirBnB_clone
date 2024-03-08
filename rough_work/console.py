@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 # command interpreter
 import cmd
+import json
 
 class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
@@ -34,15 +35,18 @@ class HBNBCommand(cmd.Cmd):
             print(f"User Created - ID: {id} -> Name: {name}")
         else:
             print("Invalid input - use Syntax : create <id> <name>")
+        self.save()
 
     def do_read(self, line):
         """Reads and displays current users- Syntax : read"""
+        self.load()
         print("List of users :")
         for id, name in self.users.items():
             print(f"ID: {id} -> Name: {name}")
 
     def do_update(self, line):
         """Updates users name using their id - Syntax : update <id> <name>"""
+        self.load()
         args = line.split()
         if len(args) == 2:
             id, name = args
@@ -53,6 +57,7 @@ class HBNBCommand(cmd.Cmd):
                 print(f"User with ID: {id} not found")
         else:
             print("Invalid input - use Syntax : update <id> <name>")
+        self.save()
 
     def do_destroy(self,id):
         """Deletes the user using the id - Syntax : destroy <id>"""
@@ -62,6 +67,17 @@ class HBNBCommand(cmd.Cmd):
             print(f"User ID:{id} deleted")
         else:
             print(f"User with ID: {id} not found")
+        self.save()
+
+    def save(self):
+        """Saves data into a json file"""
+        with open("user_data.json","w") as json_file:
+            json.dump(self.users, json_file)
+
+    def load(self):
+        """Loads data from the json file"""
+        with open("user_data.json", "r") as json_file:
+            self.users = json.load(json_file)
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
