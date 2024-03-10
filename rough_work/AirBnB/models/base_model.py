@@ -11,15 +11,18 @@ Module for the Base Class
 - __str__ method to print
 """
 
-import uuid
 from datetime import datetime
+import uuid
+
 
 class BaseModel:
+    from models import storage
     """
     This is the base model class
     It is an abstract class from which all other classes would inherit from
     """
     def __init__(self, *args, **kwargs):
+        
         """
         Initialiazes new instance of BaseModel.
 
@@ -53,6 +56,7 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
+            storage.new(self)
 
     def __str__(self):
         """Returns a string representation of the object class"""
@@ -61,10 +65,10 @@ class BaseModel:
 
     def save(self):
         """
-        Updates the public instance attribute update_at
-        with the current datetime
+        Updates the updated_at attribute and saves the object to storage.
         """
         self.updated_at = datetime.now()
+        storage.save()  # Delegate saving to storage
 
     def to_dict(self):
         """
@@ -77,3 +81,4 @@ class BaseModel:
         obj_dict['updated_at'] = self.updated_at.isoformat()
 
         return obj_dict
+
