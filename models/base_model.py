@@ -13,7 +13,7 @@ Module for the Base Class
 
 from datetime import datetime
 import uuid
-from models import storage
+# from models import storage
 
 
 class BaseModel:
@@ -57,7 +57,7 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
-            storage.new(self)
+            # storage.new(self)
 
     def __str__(self):
         """Returns a string representation of the object class"""
@@ -69,7 +69,7 @@ class BaseModel:
         Updates the updated_at attribute and saves the object to storage.
         """
         self.updated_at = datetime.now()
-        storage.save()  # Delegate saving to storage
+        # storage.save()  # Delegate saving to storage
 
     def to_dict(self):
         """
