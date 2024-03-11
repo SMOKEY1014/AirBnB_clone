@@ -1,44 +1,84 @@
 #!/usr/bin/python3
-""" This is the Parent class, the Base Class for this project"""
-import uuid
+"""
+Module for the Base Class
+- Public instance attributes
+    - id
+    - created_at
+    - updated_at
+- Public instance methods
+    - save(self) - updates the updated_at attribute
+    - to_dict(self) - returns dictionary
+- __str__ method to print
+"""
+
 from datetime import datetime
+import uuid
 
 
 class BaseModel:
+    from models import storage
+    """
+    This is the base model class
+    It is an abstract class from which all other classes would inherit from
+    """
     def __init__(self, *args, **kwargs):
-        """ Initialize a new instance of BaseModel """
+        
+        """
+        Initialiazes new instance of BaseModel.
+
+        Args:
+            *args: Unused positional arguments
+            **kwargs: Dictionary representation of an instance.
+
+        If kwargs is not empty:
+            Each key has an attribute name
+            Each value is the value of the corresponding attr name
+            Convert datetime to datetime objects
+
+        Otherwise:
+            Create id and created_at values as initially done
+        """
         if kwargs:
+            if '__class__' in kwargs:
+                # Remove '__class__' from the dictionary
+                del kwargs['__class__']
+            if 'created_at' in kwargs:
+                kwargs['created_at'] = datetime.strptime(
+                        kwargs['created_at'], '%Y-%m-%dT%H:%M:%S.%f')
+            if 'updated_at' in kwargs:
+                kwargs['updated_at'] = datetime.strptime(
+                        kwargs['updated_at'], '%Y-%m-%dT%H:%M:%S.%f')
+
             for key, value in kwargs.items():
-                if key != '__class__':
-            
-                    if key == 'created_at' or key == 'updated_at':
-                        # Convert string to datetime object
-                        value = setattr(self, key, datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f'))
-                    
-                    setattr(self, key, value)
+                setattr(self, key, value)
+
         else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
-
-        
+            storage.new(self)
 
     def __str__(self):
-        return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
+        """Returns a string representation of the object class"""
+        return "[{}] ({}) {}".format(self.__class__.__name__,
+                                     self.id, self.__dict__)
 
     def save(self):
-        from models.__init__ import storage
+        """
+        Updates the updated_at attribute and saves the object to storage.
+        """
         self.updated_at = datetime.now()
-        storage.save()
-        # storage.new(self)
+        storage.save()  # Delegate saving to storage
 
-        if self.id is None:
-            storage.new(self)
-        # return self.updated_at
-    
     def to_dict(self):
-        dict_obj = self.__dict__.copy()
-        dict_obj['__class__'] = self.__class__.__name__
-        dict_obj['created_at'] = self.created_at.isoformat()
-        dict_obj['updated_at'] = self.updated_at.isoformat()
-        return dict_obj
+        """
+        Returns a dictionary containing key/value of __dict__ for an instance
+        """
+        obj_dict = self.__dict__.copy()
+
+        obj_dict['__class__'] = self.__class__.__name__
+        obj_dict['created_at'] = self.created_at.isoformat()
+        obj_dict['updated_at'] = self.updated_at.isoformat()
+
+        return obj_dict
+
