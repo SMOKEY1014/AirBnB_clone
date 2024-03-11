@@ -1,6 +1,6 @@
-# from .engine.file_storage import FileStorage 
+from .engine import file_storage 
 
-# storage = FileStorage
+storage = file_storage.FileStorage()
 
 
-# storage.reload(self)
+storage.reload()
