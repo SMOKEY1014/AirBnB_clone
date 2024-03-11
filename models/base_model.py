@@ -13,10 +13,11 @@ Module for the Base Class
 
 from datetime import datetime
 import uuid
+import storage
 
 
 class BaseModel:
-    from models import storage
+    
     """
     This is the base model class
     It is an abstract class from which all other classes would inherit from
