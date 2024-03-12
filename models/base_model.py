@@ -18,13 +18,13 @@ import models
 
 
 class BaseModel:
-    
+
     """
     This is the base model class
     It is an abstract class from which all other classes would inherit from
     """
     def __init__(self, *args, **kwargs):
-        
+
         """
         Initialiazes new instance of BaseModel.
 
@@ -77,11 +77,9 @@ class BaseModel:
         Returns a dictionary containing key/value of __dict__ for an instance
         """
         exclude = ['name', 'my_number']
-        obj_dict = {key: value for key, value in self.__dict__.items()
-                if key not in exclude}  # Exclude
+        obj_dict = {key: value for key, value in self.__dict__.items() if key not in exclude}
         obj_dict['__class__'] = self.__class__.__name__
         obj_dict['created_at'] = self.created_at.isoformat()
         obj_dict['updated_at'] = self.updated_at.isoformat()
 
         return obj_dict
-

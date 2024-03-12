@@ -19,3 +19,4 @@ class User(BaseModel):
     password: str = ""
     first_name: str = ""
     last_name: str = ""
+    
