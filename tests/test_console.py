@@ -37,8 +37,8 @@ class TestConsole(unittest.TestCase):
         objct = storage.all()['BaseModel.f1r57-1n574nc3']
 
         # Testing Show
-        expected_output = str(objct) + '\n'
-        self.assert_stdout(expected_output, "show BaseModel {}".format(objct.id))
+        expect_output = str(objct) + '\n'
+        self.assert_stdout(expect_output, "show BaseModel {}".format(objct.id))
 
         # Testing Destroy
         self.assert_stdout("", "destroy BaseModel {}".format(objct.id))
@@ -94,5 +94,7 @@ class TestConsole(unittest.TestCase):
         # Testing Quit command
         self.assertTrue(self.console.onecmd("quit"))
 
+
 if __name__ == '__main__':
+
     unittest.main()
