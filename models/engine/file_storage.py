@@ -11,8 +11,6 @@ from models.review import Review
 from models.user import User
 
 
-
-
 class FileStorage:
     """
     Class for serializing and deserializing objects to and from a JSON file.
@@ -57,7 +55,7 @@ class FileStorage:
 
     def reload(self):
         """
-        Attempts to deserialize the JSON file and load objects into the dictionary.
+        Attempts to deserialize the JSON file and load objects into the dict.
 
         If the file doesn't exist, it does nothing silently.
         """
