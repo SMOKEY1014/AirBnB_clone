@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# Create the styles directory
+mkdir styles
+
+# Create CSS files inside the styles directory
+touch styles/3-footer.css styles/3-header.css styles/4-filters.css styles/5-filters.css styles/6-filters.css styles/7-places.css styles/8-places.css
+
+# Create the images directory
+mkdir images
