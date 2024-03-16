@@ -18,3 +18,22 @@ body {
     justify-content: center;
     align-items: center;
 }
+
+.locations,
+.amenities {
+    height: 100%;
+    width: 25%;
+}
+
+.filters div h3 {
+    font-weight: 600;
+}
+
+.filters div h4 {
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.filters:first-child {
+    border-right: #DDDDDD 1px solid;
+}
