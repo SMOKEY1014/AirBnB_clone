@@ -14,7 +14,7 @@ header {
 
 
 .logo {
-    display: flex;
     position: fixed;
+    display: flex;
     left: 20px;
 }
